@@ -70,7 +70,7 @@ class ItemEditWatermark extends ItemEditPlugin {
 
 				$which = array(
 					DERIVATIVE_TYPE_IMAGE_PREFERRED => !empty($form['whichDerivative']['preferred']),
-					DERIVATIVE_TYPE_IMAGE_RESIZE => !empty($form['whichDerivative']['resize']),
+					DERIVATIVE_TYPE_IMAGE_RESIZE    => !empty($form['whichDerivative']['resize']),
 					DERIVATIVE_TYPE_IMAGE_THUMBNAIL => !empty($form['whichDerivative']['thumbnail']),
 				);
 
@@ -135,11 +135,13 @@ class ItemEditWatermark extends ItemEditPlugin {
 		global $gallery;
 		$storage      =& $gallery->getStorage();
 		$urlGenerator =& $gallery->getUrlGenerator();
-		$redirect     = $urlGenerator->generateUrl(array(
-			'view'    => 'core.ItemAdmin',
-			'subView' => 'core.ItemEdit',
-			'itemId'  => $item->getId(),
-		));
+		$redirect     = $urlGenerator->generateUrl(
+			array(
+				'view'    => 'core.ItemAdmin',
+				'subView' => 'core.ItemEdit',
+				'itemId'  => $item->getId(),
+			)
+		);
 
 		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'watermark');
 
@@ -317,7 +319,8 @@ class ItemEditWatermark extends ItemEditPlugin {
 		}
 
 		// Grab the smallest derivative that's greater than 400px on a side
-		$itemId = $item->getId();
+		$itemId      = $item->getId();
+		$derivatives = array();
 
 		if (GalleryUtilities::isA($item, 'GalleryDataItem')) {
 			$displayImage            = $item;
